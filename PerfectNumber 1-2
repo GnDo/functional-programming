@@ -1,0 +1,35 @@
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+enum STATE {
+    PERFECT,
+    ABUNDANT,
+    DEFICIENT;
+}
+
+
+public class PerfectNumber {
+
+    public static STATE detect(int n) {
+        return process(n);
+    }
+
+    public static STATE process(int i) {
+        int sum = IntStream
+                .range(1, i)
+                .filter(j -> i % j == 0)
+                .sum();
+        return sum == i ? STATE.PERFECT : sum < i ? STATE.DEFICIENT : STATE.ABUNDANT;
+    }
+    
+
+    public static Set<Integer> divisors(int k) {
+    	  return IntStream
+                  .range(1, Math.toIntExact(Math.round(Math.sqrt(k))))
+                  .filter(i -> k % i == 0)
+                  .boxed()
+                  .collect(Collectors.toCollection(HashSet::new));
+    }
+}
